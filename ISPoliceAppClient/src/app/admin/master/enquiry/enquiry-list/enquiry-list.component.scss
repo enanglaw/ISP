@@ -1,0 +1,95 @@
+
+form {
+    width: 100%;
+  }
+  button {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+  .shadow-4 {
+    box-shadow: 0 1px 10px #0000001f,0 4px 5px #00000024,0 2px 4px -1px #0003 !important;
+    margin: 5px;
+    padding: 5px;
+    border: radius 5%;
+  }
+  mat-form-field {
+    width: 30%;
+    margin-right: 1rem;
+  }
+  mat-form-field.w100 {
+    width: 92%;
+    margin-right: 1rem;
+  }
+  textarea {
+    height: 300px;
+  }
+  
+  .mediaLabel {
+    width: 45%;
+    max-width: 100%;
+    margin: 0 0 1rem 0;
+    display: inline-block;
+    vertical-align: middle;
+    align-content: flex-start;
+    align-items: flex-start;
+    border: solid 1px #ccc;
+    min-height: 36px;
+    background: white;
+    border-radius: 4px;
+    line-height: 36px;
+    padding-left: 1rem;
+  }
+  
+  table {
+    width: 100%;
+    padding: 0px;
+    background-color: #f5efef !important;
+  }
+  td {
+    width: 50%;
+    vertical-align: top;
+  }
+  td > mat-form-field {
+    width: 80%;
+  }
+  
+  table.normal {
+    width: 100%;
+    padding: 0px;
+    background: transparent;
+  }
+  
+  .mediaLabel2 {
+    width: 100%;
+    min-width: 100%;
+    margin: 0 0 1rem 0;
+    display: inline-block;
+    vertical-align: middle;
+    align-content: flex-start;
+    align-items: flex-start;
+    border: solid 1px #ccc;
+    min-height: 70%;
+    background: white;
+    border-radius: 4px;
+    line-height: 36px;
+    padding-left: 1rem;
+  }
+  
+  .quill-caption {
+    font-family: sans-serif;
+    line-height: 2.25rem;
+    font-weight: 100;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .mat-header-cell {
+    
+    width: 27%;
+  }
+  
+  .mat-cell {
+   
+    width: 27%;
+    margin: 25px;
+    padding: 25px;
+  }
+  

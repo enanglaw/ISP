@@ -1,0 +1,7 @@
+<div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px">
+  <h2>Edit Venue</h2>
+  <app-display-errors [errors]="errors"></app-display-errors>
+  <div>{{errors}}</div>
+  <app-form-venue *ngIf="model" [model]="model" (onSaveChanges)="saveChanges($event)"></app-form-venue>
+  <mat-spinner *ngIf="!model"></mat-spinner>
+</div>

@@ -1,0 +1,9 @@
+
+<app-organization-form *ngIf="model" [heading]="'Edit Organization'" 
+[model]="organizationModel"
+(onSaveChanges)="onSaveChanges($event)" >
+</app-organization-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>

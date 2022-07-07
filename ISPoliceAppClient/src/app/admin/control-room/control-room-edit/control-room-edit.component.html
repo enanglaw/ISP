@@ -1,0 +1,8 @@
+<app-form-control-room *ngIf="model" [heading]="'Edit Contact'" [model]="model" (onSaveChanges)="onSaveChanges($event)">
+
+</app-form-control-room>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>
+

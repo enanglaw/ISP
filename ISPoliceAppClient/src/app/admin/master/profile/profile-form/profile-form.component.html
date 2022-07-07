@@ -1,0 +1,774 @@
+<div *ngIf="isFormLoded" fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill
+    class="components-container-gt-xs ">
+
+    <form (submit)="saveChanges()" (keydown.enter)="$event.preventDefault()" [formGroup]="form" fxLayout="row"
+        fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayoutGap="10px" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+                <h3 class="mat-headline">{{heading}}</h3>
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button type="button" mat-icon-button (click)="onCancel()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+
+
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <div fxFlex="30">
+                    <div fxLayout="row" fxFlexFill>
+                        <div fxLayout="column" fxFlex="80">
+                            <div class="profile-image">
+                                <input class="profile-image" type="image" [src]="imageUrl">
+                            </div>
+                        </div>
+                        <div fxLayout="column" fxFlex="80" fxLayoutAlign="end center">
+                            <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)"
+                                style="display:none;">
+                            <button type="button" color="primary" mat-raised-button
+                                (click)="file.click()">Upload</button>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex="70" fxLayout="row">
+                    <div fxLayout="column" fxFlexFill>
+                        <mat-form-field fxFlex="100" appearance="outline">
+                            <mat-label>Name *</mat-label>
+                            <input matInput placeholder="Name" formControlName="name">
+                            <mat-error
+                                *ngIf="f.name.invalid && (f.name.touched || f.name.dirty) && f.name.hasError('required')">
+                                Name is required.</mat-error>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="100" appearance="outline">
+                            <mat-label>HS </mat-label>
+                            <input matInput placeholder="HS" formControlName="hs">
+                           
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+            <mat-divider></mat-divider>
+            <ng-container formGroupName="profileTransaction">
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="33" appearance="outline">
+                        <mat-label>Age *</mat-label>
+                        <input matInput placeholder="Age" formControlName="age" type="number">
+                        <mat-error
+                            *ngIf="t.age.invalid && (t.age.touched || t.age.dirty) && t.age.hasError('required')">
+                            Age is required.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Status </mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option>Please Choose the Status</mat-option>
+                            <mat-option *ngFor="let status of statusList" [value]="status.statusId">
+                                {{status.statusName}}</mat-option>
+                        </mat-select>
+                       
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Category </mat-label>
+                        <mat-select formControlName="category">
+                            <mat-option>Please Choose the Status</mat-option>
+                            <mat-option *ngFor="let item of categoryList" [value]="item.Id">
+                                {{item.Name}}</mat-option>
+                        </mat-select>
+                       
+                    </mat-form-field>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Permanent Addres * </mat-label>
+                        <input formControlName="permanentAddres" matInput placeholder="Permanent Addres">
+                        <mat-error
+                            *ngIf="t.permanentAddres.invalid && (t.permanentAddres.touched || t.permanentAddres.dirty) && t.permanentAddres.hasError('required')">
+                            Status is required.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Present Address </mat-label>
+                        <input formControlName="presentAddress" matInput placeholder="Present Address">
+                      
+                    </mat-form-field>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Father Name </mat-label>
+                        <input formControlName="fatherName" matInput placeholder="Father Name ">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Mother Name</mat-label>
+                        <input formControlName="motherName" matInput placeholder="Mother Name">
+                    </mat-form-field>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Martial Status </mat-label>
+                        <mat-select formControlName="martialStatus">
+                            <mat-option>Please Choose </mat-option>
+                            <mat-option *ngFor="let item of martialStatusList" [value]="item.Id">
+                                {{item.Name}}</mat-option>
+                        </mat-select>
+                        <!-- <mat-error
+                            *ngIf="t.martialStatus.invalid && (t.martialStatus.touched || t.martialStatus.dirty) && t.martialStatus.hasError('required')">
+                            Martial Status is required.</mat-error> -->
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Spouse Name</mat-label>
+                        <input formControlName="spouseName" matInput placeholder="Spouse Name">
+                    </mat-form-field>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="33" appearance="outline">
+                        <mat-label>Education </mat-label>
+                        <input formControlName="education" matInput placeholder="Education">
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="33" appearance="outline">
+                        <mat-label>Occupation</mat-label>
+                        <input formControlName="occupation" matInput placeholder="Occupation">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33" appearance="outline">
+                        <mat-label>No Of Goondas </mat-label>
+                        <input type="number" formControlName="noOfGoondas" matInput placeholder="No Of Goondas">
+                    </mat-form-field>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Security Proceeding</mat-label>
+                        <input formControlName="securityProceeding" matInput placeholder="Security Proceeding">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Date Of Initiation</mat-label>
+                        <input formControlName="dateOfInitiation" matInput [matDatepicker]="picker"
+                            (click)="picker.open()" placeholder="Date Of Initiation">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Last Action</mat-label>
+                        <input formControlName="lastAction" matInput placeholder="Last Action">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Last Action Date</mat-label>
+                        <input formControlName="lastActionDate" matInput [matDatepicker]="lastActionDate"
+                            (click)="lastActionDate.open()" placeholder="Action Date">
+                        <mat-datepicker-toggle matSuffix [for]="lastActionDate"></mat-datepicker-toggle>
+                        <mat-datepicker #lastActionDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Bail</mat-label>
+                        <input formControlName="bail" matInput placeholder="Bail">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Bail Date</mat-label>
+                        <input formControlName="bailDate" matInput [matDatepicker]="bailDate" (click)="bailDate.open()"
+                            placeholder="Bail Date">
+                        <mat-datepicker-toggle matSuffix [for]="bailDate"></mat-datepicker-toggle>
+                        <mat-datepicker #bailDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+            <mat-divider></mat-divider>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">Add Associates</h4>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" class="example-full-width" appearance="outline">
+                    <input type="text" placeholder="Pick one" aria-label="Number" matInput
+                        formControlName="associateAutoSearchControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                       
+                        <mat-option (onSelectionChange)="associateSelected($event, option)"
+                            *ngFor="let option of associateFilteredOptions | async" [value]="option.name">
+                            {{option.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button [class.spinner]="showLoading" (click)="onNewAssociatebtnClick()" type="button" color="primary" mat-raised-button >Add New</button>
+            </div>
+            
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table mat-table formArrayName="profileAlias" [dataSource]="profileAssociatesDataSource"
+                    class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef>No</th>
+                        <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onProfileAssociatesDelete(element,index)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="profileAssociatesDataSourceColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: profileAssociatesDataSourceColumns"></tr>
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">Alias List</h4>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table mat-table formArrayName="profileAlias" [dataSource]="profileAliasDataSource"
+                    class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef>No</th>
+                        <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef>Alias Name</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Alias Name</mat-label>
+                                <input matInput formControlName="name">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onProfileAliasDelete(element,index)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>
+                            <button type="button" (click)="onAddProfileAlias()" mat-icon-button title="Delete"
+                                color="warn">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="profileAliasDataSourceColumns"></tr>
+                    <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                        *matRowDef="let row; columns: profileAliasDataSourceColumns"></tr>
+                    <tr mat-footer-row *matFooterRowDef="profileAliasDataSourceColumns"></tr>
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">Spouse List</h4>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table mat-table formArrayName="profileSpouses" [dataSource]="profileSpouseDataSource"
+                    class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef>No</th>
+                        <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef>Spouse Name</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Spouse Name</mat-label>
+                                <input matInput formControlName="name">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onProfileSpouseDelete(element,index)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>
+                            <button type="button" (click)="onAddProfileSpouse()" mat-icon-button title="Delete"
+                                color="warn">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="profileSpouseDataSourceColumns"></tr>
+                    <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                        *matRowDef="let row; columns: profileSpouseDataSourceColumns"></tr>
+                    <tr mat-footer-row *matFooterRowDef="profileSpouseDataSourceColumns"></tr>
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">Children List</h4>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table mat-table formArrayName="profileChildrens" [dataSource]="profileChildrenDataSource"
+                    class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef>No</th>
+                        <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef>Children Name</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Children Name</mat-label>
+                                <input matInput formControlName="name">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+                    <ng-container matColumnDef="Gender">
+                        <th mat-header-cell *matHeaderCellDef>Gender</th>
+                        <td mat-cell *matCellDef="let element ; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Select Gender </mat-label>
+                                <mat-select floatLabel="never" formControlName="gender">
+                                    <mat-option *ngFor="let item of genderDownList" [value]="item.Id">
+                                        {{item.Name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onProfileChildrenDelete(element,index)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>
+                            <button type="button" (click)="onAddProfileChildren()" mat-icon-button title="Delete"
+                                color="warn">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="profileChildrenDataSourceColumns"></tr>
+                    <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                        *matRowDef="let row; columns: profileChildrenDataSourceColumns"></tr>
+                    <tr mat-footer-row *matFooterRowDef="profileChildrenDataSourceColumns"></tr>
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">Siblings List</h4>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table mat-table formArrayName="profileSiblings" [dataSource]="profileSiblingsDataSource"
+                    class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef>No</th>
+                        <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef>Siblings Name</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Siblings Name </mat-label>
+                                <input matInput  formControlName="name">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="Relation">
+                        <th mat-header-cell *matHeaderCellDef>Relation</th>
+                        <td mat-cell *matCellDef="let element ; let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Select Relation </mat-label>
+                                <mat-select formControlName="relation" >
+                                    <mat-option value="1">Brother</mat-option>
+                                    <mat-option value="0">Sister</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onProfileSiblingDelete(element,index)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>
+                            <button type="button" (click)="onAddProfileSibling()" mat-icon-button title="Delete"
+                                color="warn">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="profileSiblingsDataSourceColumns"></tr>
+                    <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                        *matRowDef="let row; columns: profileSiblingsDataSourceColumns"></tr>
+                    <tr mat-footer-row *matFooterRowDef="profileSiblingsDataSourceColumns"></tr>
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">Abstract List</h4>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table class="full" fxFlex="100" mat-table formArrayName="profileAbstracts" [dataSource]="profileAbstractDataSource"
+                    class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="City/District">
+                        <th mat-header-cell *matHeaderCellDef>City/District</th>
+                        <td mat-cell *matCellDef="let element ; let i = index" [formGroupName]="i">
+                            <mat-form-field  appearance="outline" [style.width.%]="98">
+                                <mat-label>Please Choose City </mat-label>
+                                <mat-select formControlName="distCity" >
+
+                                    <mat-option *ngFor="let item of distCityList" [value]="item.Id">
+                                        {{item.Name}}</mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+
+                            
+                            <ng-container
+                                *ngIf="form.get('profileAbstracts').at(i).value.distCity == 2; else districtListTemplate">
+                                <mat-form-field  appearance="outline" [style.width.%]="98">
+                                    <mat-label>Select City  </mat-label>
+                                    <mat-select floatLabel="never" formControlName="distCityId">
+                                    <mat-option *ngFor="let item of cityDownList" [value]="item.Id">
+                                        {{item.Name}}</mat-option>
+                                </mat-select>
+                                </mat-form-field>
+                                
+                            </ng-container>
+                            <ng-template #districtListTemplate>
+                                <mat-form-field  appearance="outline" [style.width.%]="98">
+                                    <mat-label>Select District  </mat-label>
+                                    <mat-select floatLabel="never" formControlName="distCityId">
+                                    <mat-option *ngFor="let item of distDropDownList" [value]="item.districtId">
+                                        {{item.district}}</mat-option>
+                                </mat-select>
+                                </mat-form-field>
+                                
+                            </ng-template>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Murder">
+                        <th mat-header-cell *matHeaderCellDef>Murder</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Murder </mat-label>
+                                <input matInput type="number"  formControlName="murder" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="98" >
+                                <mat-label>Attmpt Murder </mat-label>
+                                <input matInput  type="number" formControlName="attmptMurder" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="NDPS">
+                        <th mat-header-cell *matHeaderCellDef>NDPS</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field  appearance="outline" [style.width.%]="98">
+                                <mat-label>Ndps </mat-label>
+                                <input matInput  type="number" formControlName="ndps" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                            <mat-form-field  appearance="outline" [style.width.%]="98">
+                                <mat-label>Robbery</mat-label>
+                                <input matInput type="number" formControlName="robbery" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="ChainSnatch">
+                        <th mat-header-cell *matHeaderCellDef>Chain Snatch</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Chain Snatch</mat-label>
+                                <input matInput type="number" formControlName="chainSnatch" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Mobile Snatch</mat-label>
+                                <input matInput type="number" formControlName="mobileSnatch" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="HbDay">
+                        <th mat-header-cell *matHeaderCellDef>Hb Day</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Hb Day</mat-label>
+                                <input matInput type="number" formControlName="hbDay" (change)="onAbstractChange(index)"> 
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Hb Night</mat-label>
+                                <input matInput type="number" formControlName="hbNight" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="OtherCase">
+                        <th mat-header-cell *matHeaderCellDef>Other Case</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field  appearance="outline" [style.width.%]="98">
+                                <mat-label>Other Case</mat-label>
+                                <input matInput type="number" formControlName="otherCase" (change)="onAbstractChange(index)">
+                            </mat-form-field>
+                            <mat-form-field  appearance="outline" [style.width.%]="98">
+                                <mat-label>Tech Case</mat-label>
+                                <input matInput type="number" formControlName="techCase"(change)="onAbstractChange(index)">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+                    <ng-container matColumnDef="Total">
+                        <th mat-header-cell *matHeaderCellDef>Total</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <!-- <mat-form-field floatLabel="never">
+                                <input matInput placeholder="jurisdiction" formControlName="jurisdiction">
+                            </mat-form-field> -->
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Total Case</mat-label>
+                                <input matInput [readonly]="true" type="number" formControlName="totalCase">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onProfileAbstractDelete(element,index)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>
+                            <button type="button" (click)="onAddProfileSAbstract()" mat-icon-button title="Delete"
+                                color="warn">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="profileAbstractDataSourceColumns"></tr>
+                    <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                        *matRowDef="let row; columns: profileAbstractDataSourceColumns"></tr>
+                    <tr mat-footer-row *matFooterRowDef="profileAbstractDataSourceColumns"></tr>
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">Case Detail List</h4>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table class="full" fxFlex="100" mat-table formArrayName="caseDetails"
+                    [dataSource]="caseDetailDataSource" class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="PS">
+                        <th mat-header-cell *matHeaderCellDef>PS</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline"  [style.width.%]="98">
+                                <mat-label>PS </mat-label>
+                                <mat-select [formControlName]="'ps'" placeholder="Station">
+                                    <mat-option *ngFor="let item of stationDownList" [value]="item.stationId">
+                                        {{item.stationName}}
+                                    </mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>CR </mat-label>
+                                <input matInput placeholder="cr" formControlName="cr">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Section">
+                        <th mat-header-cell *matHeaderCellDef>Section</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Section </mat-label>
+
+                                <input matInput  formControlName="section">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Head </mat-label>
+                                <input matInput  formControlName="head">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="IO">
+                        <th mat-header-cell *matHeaderCellDef>IO</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>IO </mat-label>
+                                <input matInput  formControlName="io">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Court </mat-label>
+
+                                <input matInput formControlName="court">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="Goondas">
+                        <th mat-header-cell *matHeaderCellDef>Goondas</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Goondas </mat-label>
+
+                                <input matInput  formControlName="goondas">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Stage </mat-label>
+                                <input matInput formControlName="stage">
+                            </mat-form-field>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="Reason">
+                        <th mat-header-cell *matHeaderCellDef>Reason</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field appearance="outline" [style.width.%]="98">
+                                <mat-label>Reason </mat-label>
+                                <input matInput  formControlName="reason">
+                            </mat-form-field>
+                            <!-- <mat-form-field floatLabel="never">
+                                <input matInput placeholder="DSR" formControlName="dsr">
+                            </mat-form-field> -->
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> </td>
+
+
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onCaseDetailDelete(element,index)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>
+                            <button type="button" (click)="onAddCaseDetail()" mat-icon-button title="Delete"
+                                color="warn">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="caseDetailDataSourceColumns"></tr>
+                    <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                        *matRowDef="let row; columns: caseDetailDataSourceColumns"></tr>
+                    <tr mat-footer-row *matFooterRowDef="caseDetailDataSourceColumns"></tr>
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+            <div fxFlex class="contact-save" fxLayout="row" fxLayoutAlign="end stretch">
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                </div>
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    <button type="button" (click)="onCancel()" mat-raised-button>CANCEL</button>
+                    <button color="primary" mat-raised-button [disabled]="!form.valid">SAVE</button>
+                </div>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+            </div>
+
+        </div>
+    </form>
+</div>

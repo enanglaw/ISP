@@ -1,0 +1,29 @@
+<!-- <stbui-loading *ngIf="showLoading"></stbui-loading> -->
+<mat-toolbar class="mat-elevation-z4">
+  <button mat-icon-button (click)="sidenav.toggle();drawer.toggle();" *ngIf="matDrawerShow">
+    <i class="material-icons app-toolbar-menu">menu </i>
+  </button>
+  <button mat-icon-button (click)="sidenav.toggle();" *ngIf="!matDrawerShow">
+    <i class="material-icons app-toolbar-menu">menu </i>
+  </button>
+  <div fxLayout fxLayoutGap style="text-align:center;">
+    <img class="" [src]="'assets/chennaipolicelogo.png'" width="71" height="71">
+    <p class="chennaiPoliceText">Greater Chennai Police</p>
+  </div>
+  <span class="spacer"></span>
+
+  <!-- <button mat-icon-button (click)="searchOpen = !searchOpen" fxHide="true" [fxHide.gt-xs]="false">
+    <i class="material-icons">search</i>
+  </button>
+  <cdk-search-bar [open]="searchOpen"></cdk-search-bar> -->
+
+  <app-fullscreen></app-fullscreen>
+
+  <app-toolbar-notification [notifications]="toolbarHelpers?.notifications!"></app-toolbar-notification>
+  <app-user-menu [currentUser]="toolbarHelpers?.currentUser"></app-user-menu>
+
+  <button mat-icon-button (mouseover)="sidebar.toggle();" *ngIf="false">
+    <i class="material-icons app-toolbar-menu">menu </i>
+  </button>
+
+</mat-toolbar>

@@ -1,0 +1,30 @@
+<form (submit)="saveChanges()" [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Permission Type Name*</mat-label>
+    <input formControlName="venuePermissionTypeName" matInput autocomplete="off" />
+    <mat-error
+      *ngIf="f.venuePermissionTypeName.invalid && (f.venuePermissionTypeName.touched || f.venuePermissionTypeName.dirty) && f.venuePermissionTypeName.hasError('required')">
+      Permission type is required.</mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="outline">
+    <mat-label>Venue Name*</mat-label>
+    <mat-select formControlName="venueId">
+      <mat-option>Please Choose the Venue</mat-option>
+      <mat-option *ngFor="let venue of venueList" [value]="venue.venueId">
+        {{venue.venueName}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="f.venueId.invalid && (f.venueId.touched || f.venueId.dirty) && f.venueId.hasError('required')">
+      Please select Venue.</mat-error>
+  </mat-form-field>
+  <div *ngIf="model">
+    <mat-checkbox formControlName="isActive" color="primary">Is Active</mat-checkbox>
+  </div>
+  <!-- <mat-error *ngIf="form.invalid">{{getErrorMessageFieldName()}}</mat-error> -->
+  <!-- </mat-form-field> -->
+  <div>&nbsp;</div>
+  <div>
+    <button mat-flat-button color="primary" [disabled]="form.invalid">Save Changes</button>
+    <a mat-stroked-button routerLink="/auth/vptype">Cancel</a>
+  </div>
+</form>

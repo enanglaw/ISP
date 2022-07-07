@@ -1,0 +1,92 @@
+<h2 mat-dialog-title>Add New Associate</h2>
+
+<mat-dialog-content >
+  
+
+        <div *ngIf="initFormComplete" fxFlex fxLayoutGap="10px" fxLayout="row" fxFlex="100" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+            <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs box-shadow-gt-xs">
+                <div  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill>
+                    <form [formGroup]="associateForm" fxFlex="100" fxLayout="column">
+                      
+                        <div ffxFlex fxLayoutGap="10px" fxLayout="row" fxFlex="100" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                            <div fxLayout="column" fxFlexFill>
+                                <mat-form-field fxFlex="100" appearance="outline">
+                                    <mat-label>Name *</mat-label>
+                                    <input matInput placeholder="Name" formControlName="name">
+                                    <mat-error
+                                        *ngIf="newAssiciate.name.invalid && (newAssiciate.name.touched || newAssiciate.name.dirty) && newAssiciate.name.hasError('required')">
+                                        Name is required.</mat-error>
+                                </mat-form-field>
+                                <mat-form-field fxFlex="100" appearance="outline">
+                                    <mat-label>HS </mat-label>
+                                    <input matInput placeholder="HS" formControlName="hs">
+                                    <!-- <mat-error
+                                        *ngIf="newAssiciate.hs.invalid && (newAssiciate.hs.touched || newAssiciate.hs.dirty) && newAssiciate.hs.hasError('required')">
+                                        HS is required.</mat-error> -->
+                                </mat-form-field>
+                            </div>
+        
+                        </div>
+                        <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                            <table mat-table formArrayName="profileAlias" [dataSource]="newProfileAssociateAliasDataSource"
+                                class="mat-elevation-z8 table-index">
+                                <ng-container matColumnDef="No">
+                                    <th mat-header-cell *matHeaderCellDef>No</th>
+                                    <td mat-cell *matCellDef="let element ; let i = index">{{ i+1}}</td>
+                                    <td mat-footer-cell *matFooterCellDef> </td>
+                                </ng-container>
+                                <ng-container matColumnDef="Name">
+                                    <th mat-header-cell *matHeaderCellDef>Alias Name</th>
+                                    <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                        <mat-form-field appearance="outline" [style.width.%]="98">
+                                            <mat-label>Alias Name</mat-label>
+                                            <input matInput placeholder="Alias Name" formControlName="name">
+                                        </mat-form-field>
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef> </td>
+        
+                                </ng-container>
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                    <td mat-cell *matCellDef="let element; let index = index">
+        
+                                        <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                              title: 'Confirmation',
+                                              text: 'Are you sure that you want to delete the record?',
+                                              showCancelButton: true
+                                          }" (confirm)="onNewProfileAssociateAliasDelete(element)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+        
+                                    </td>
+                                    <td mat-footer-cell *matFooterCellDef>
+                                        <button type="button" (click)="onAddNewProfileAssociateAlias()" mat-icon-button title="Delete"
+                                            color="warn">
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                    </td>
+        
+                                </ng-container>
+        
+                                <tr mat-header-row *matHeaderRowDef="newProfileAssociateAliasDataSourceColumns"></tr>
+                                <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                                    *matRowDef="let row; columns: newProfileAssociateAliasDataSourceColumns"></tr>
+                                <tr mat-footer-row *matFooterRowDef="newProfileAssociateAliasDataSourceColumns"></tr>
+                            </table>
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+            
+            
+        </div>
+
+   
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button [class.spinner]="showLoading" class="mat-raised-button mat-primary" (click)="addNewAssociate()"  [disabled]="!associateForm.valid" >Save</button>
+</mat-dialog-actions>

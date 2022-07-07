@@ -1,0 +1,8 @@
+<app-enquiry-form *ngIf="model" [heading]="'Edit Allegation Enquiry'" 
+[model]="allegationModel"
+(onSaveChanges)="onSaveChanges($event)" >
+</app-enquiry-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>

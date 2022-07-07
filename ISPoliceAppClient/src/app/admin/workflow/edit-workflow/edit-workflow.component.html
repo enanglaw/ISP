@@ -1,0 +1,5 @@
+<div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px">
+  <h2>Edit Workflow</h2>
+  <app-form-workflow *ngIf="model" [model]="model" (onSaveChanges)="saveChanges($event)"></app-form-workflow>
+  <mat-spinner *ngIf="!model"></mat-spinner>
+</div>

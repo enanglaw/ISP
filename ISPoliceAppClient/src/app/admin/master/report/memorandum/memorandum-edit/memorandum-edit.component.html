@@ -1,0 +1,8 @@
+<app-memorandum-form *ngIf="model" [heading]="'Edit Memorandum'" 
+[model]="memorandumModel"
+(onSaveChanges)="onSaveChanges($event)" >
+</app-memorandum-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>

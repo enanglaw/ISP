@@ -1,0 +1,89 @@
+.full {
+	width: 100%;
+}
+.profile-image{
+    border: 1px solid black;
+    min-height: 200px;
+    min-width: 200px;
+	max-height: 200px;
+    max-width: 200px;
+
+}
+.contact-list-container {
+	background-color: white;
+	padding: 10px;
+margin-bottom: 40px;
+	.contact-list {
+		height: 400px;
+		overflow: auto;
+		div {
+			margin: 0;
+		}
+		h3 {
+			margin: 0;
+		}
+		p {
+			margin: 0;
+		}
+		.avatar {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+		}
+	}
+	
+	.contact-list-header {
+		background-color: #eee;
+		padding: 10px;
+		div {
+			margin: auto;
+		}
+		
+	}
+}
+.contact-add {
+		padding: 10px;
+		background: white;
+        // margin-bottom: 30px;
+		.avatar {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+		}
+		h3 {
+			margin: auto;
+		}
+	}
+
+    table {
+		table-layout: fixed;
+		width: 100%;
+		display: table;
+      }
+      
+      a {
+        margin-right: 1em;
+      }
+
+      table.mat-table {
+        margin-bottom: 20px;
+    }
+
+.timePicker{
+    padding: 0em 0 0em 0;
+}
+.contact-save{
+    margin-bottom:20px;
+    button{
+        margin-right: 20px;
+    }
+}
+.e-richtexteditor.e-rte-tb-expand{
+    margin-bottom: 20px;
+}
+      
+
+.box-shadow-gt-xs{
+
+	box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}

@@ -1,0 +1,6 @@
+<div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px">
+  <h2>Create Venue</h2>
+  <app-display-errors [errors]="errors"></app-display-errors>
+  <div>{{errors}}</div>
+  <app-form-venue (onSaveChanges)="saveChanges($event)"></app-form-venue>
+</div>

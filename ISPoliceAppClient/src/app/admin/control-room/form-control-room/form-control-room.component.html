@@ -1,0 +1,314 @@
+<div *ngIf="isformLoad" fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill
+    class="components-container-gt-xs ">
+
+    <form (submit)="saveChanges()" (keydown.enter)="$event.preventDefault()" [formGroup]="form" fxLayout="row"
+        fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+                <h3 class="mat-headline" fxFlex="80">{{heading}}</h3>
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button type="button" mat-icon-button>
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+
+
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Category*</mat-label>
+                    <mat-select formControlName="categoryId">
+                        <mat-option>Please Choose the Category</mat-option>
+                        <mat-option *ngFor="let category of categoryList" [value]="category.categoryId">
+                            {{category.categoryName}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="f.categoryId.invalid && (f.categoryId.touched || f.categoryId.dirty) && f.categoryId.hasError('required')">
+                        Category is required.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="center start">
+                <mat-form-field appearance="outline" fxFlex="33">
+                    <mat-label>Zone *</mat-label>
+                    <mat-select formControlName="zoneId">
+                        <mat-option>Please Choose the Zone</mat-option>
+                        <mat-option *ngFor="let zoneitem of ZoneList" [value]="zoneitem.zoneId">
+                            {{zoneitem.zone}}</mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="f.Zone.invalid && (f.Zone.touched || f.Zone.dirty) && f.Zone.hasError('required')">
+                      Please select zone.</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="33">
+                    <mat-label>District*</mat-label>
+                    <mat-select formControlName="districtId" (selectionChange)="onDistrictChange($event)">
+                        <mat-option>Please Choose the District</mat-option>
+                        <mat-option *ngFor="let district of districtList" [value]="district.districtId">
+                            {{district.district}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="f.districtId.invalid && (f.districtId.touched || f.districtId.dirty) && f.districtId.hasError('required')">
+                        Please select District.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="33">
+                    <mat-label>Station Name*</mat-label>
+                    <mat-select formControlName="psId" (selectionChange)="onPStationChange($event)">
+                        <mat-option>Please Choose the Station</mat-option>
+                        <mat-option *ngFor="let station of stationList" [value]="station.stationid">
+                            {{station.stationName}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="f.psId.invalid && (f.psId.touched || f.psId.dirty) && f.psId.hasError('required')">
+                        Please select Station.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>ReportDate *</mat-label>
+                    <input formControlName="date" matInput [matDatepicker]="picker" (click)="picker.open()"
+                        placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error
+                        *ngIf="f.date.invalid && (f.date.touched || f.date.dirty) && f.date.hasError('required')">
+                        Date is required.</mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <!-- <mat-label>ReportDate *</mat-label> -->
+                    <input hidden="true" matInput [ngxTimepicker]="timepicker" placeholder="Choose a time">
+                    <!-- <ngx-material-timepicker-toggle [for]="timepicker"></ngx-material-timepicker-toggle>
+                    <ngx-material-timepicker #timepicker></ngx-material-timepicker> -->
+                    <ngx-timepicker-field #timepicker [format]="24" [defaultTime]="'23:11'" formControlName="time">
+                    </ngx-timepicker-field>
+
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Given by *</mat-label>
+                    <input matInput placeholder="Given by" formControlName="givenBy">
+                    <mat-error
+                        *ngIf="f.givenBy.invalid && (f.givenBy.touched || f.givenBy.dirty) && f.givenBy.hasError('required')">
+                        Given By is required.</mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Taken by *</mat-label>
+                    <input matInput placeholder="Given by" formControlName="takenBy">
+                    <mat-error
+                        *ngIf="f.takenBy.invalid && (f.takenBy.touched || f.takenBy.dirty) && f.takenBy.hasError('required')">
+                        Taken By is required.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Case No *</mat-label>
+                    <input matInput placeholder="Case No " formControlName="caseNo">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>SOC *</mat-label>
+                    <input matInput placeholder="SOC" formControlName="soc">
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="33" appearance="outline">
+                    <mat-label>DO *</mat-label>
+                    <input matInput formControlName="do" [ngxMatDatetimePicker]="Dopicker"
+                        placeholder="Choose a date & time">
+                    <mat-datepicker-toggle matSuffix [for]="Dopicker"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #Dopicker></ngx-mat-datetime-picker>
+                    <mat-error *ngIf="f.do.invalid && (f.do.touched || f.do.dirty) && f.do.hasError('required')">
+                        Taken By is required.</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="33" appearance="outline">
+                    <mat-label>DR *</mat-label>
+                    <input matInput formControlName="dr" [ngxMatDatetimePicker]="Drpicker"
+                        placeholder="Choose a date & time">
+                    <mat-datepicker-toggle matSuffix [for]="Drpicker"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #Drpicker></ngx-mat-datetime-picker>
+                    <mat-error *ngIf="f.dr.invalid && (f.dr.touched || f.dr.dirty) && f.dr.hasError('required')">
+                        Taken By is required.</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="33" appearance="outline">
+                    <mat-label>Dr Source *</mat-label>
+                    <input matInput placeholder="Dr Source" formControlName="drSource">
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Complainant </mat-label>
+                    <input matInput placeholder="Complainant/Victim Name " formControlName="complainant">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Complainant Address </mat-label>
+
+
+                    <input matInput placeholder="Complainant Address" formControlName="complainantAddress">
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>PL </mat-label>
+                    <input matInput placeholder="PL" formControlName="pl">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>PR </mat-label>
+                    <input matInput placeholder="PR" formControlName="pr">
+                </mat-form-field>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Total Accused </mat-label>
+                    <input (change)="onAccusedChnage($event)" type="number" matInput placeholder="Total Accused"
+                        formControlName="totalAccused">
+                </mat-form-field>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div fxFlex fxLayoutGap="20px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <table mat-table formArrayName="controlRoomDSRAccuseds" [dataSource]="accusedListDataSource"
+                    class="mat-elevation-z8 table-index">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef>No</th>
+                        <td mat-cell *matCellDef="let element ; let i = index">No {{i + 1}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="HSNbr">
+                        <th mat-header-cell *matHeaderCellDef>HSNbr</th>
+                        <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                            <mat-form-field floatLabel="never">
+                                <input matInput placeholder="HSNbr" formControlName="hsNbr">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="AccusedName">
+                        <th mat-header-cell *matHeaderCellDef>Accused Name</th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+                            <mat-form-field floatLabel="never">
+                                <input matInput placeholder="Accused Name" formControlName="accusedName">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let element ; let index = index" [formGroupName]="index">
+                            <mat-form-field floatLabel="never">
+                                <mat-select formControlName="status" placeholder="Status">
+                                    <mat-option value="1">Arrested</mat-option>
+                                    <mat-option value="0">Not Arrested</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Address">
+                        <th mat-header-cell *matHeaderCellDef>Address</th>
+                        <td mat-cell *matCellDef="let element ; let index = index" [formGroupName]="index">
+                            <mat-form-field floatLabel="never">
+                                <input matInput placeholder="Accused Address" formControlName="accusedAddress">
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="CrimeNumber">
+                        <th mat-header-cell *matHeaderCellDef>Crime Number</th>
+                        <td mat-cell *matCellDef="let element; let index = index" [formGroupName]="index">
+
+                            <div formArrayName="controlRoomDSRAccusedDetails">
+                                <div [formGroupName]="j"
+                                    *ngFor="let details of element.controls['controlRoomDSRAccusedDetails'].controls; let j = index">
+                                    <ng-container *ngIf="details.get('isActive').value==true">
+                                        <mat-form-field floatLabel="never">
+                                            <input matInput placeholder="Crime Number" formControlName="crimeNumber">
+                                        </mat-form-field>
+                                        <mat-form-field floatLabel="never">
+                                            <input matInput placeholder="Section Number" formControlName="sectionNumber">
+                                        </mat-form-field>
+                                        <button type="button" mat-icon-button title="Remove" color="warn"
+                                            (click)="onDeleteAccuseDetails(details,index)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </ng-container>
+                                    
+                                </div>
+                            </div>
+                            <button type="button" mat-icon-button title="ADD" color="warn"
+                                (click)="onAddAccuseDetails(element)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let element; let index = index">
+
+                            <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                  title: 'Confirmation',
+                                  text: 'Are you sure that you want to delete the record?',
+                                  showCancelButton: true
+                              }" (confirm)="onAccusedDelete(index,element)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr [hidden]="row.controls['isActive'].value==0" mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+
+                </table>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="100" appearance="outline">
+                    <mat-label>Subject </mat-label>
+                    <input matInput placeholder="Subject" formControlName="subject">
+                </mat-form-field>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <ejs-richtexteditor id="richtxt_controlroom" formControlName="detail" [toolbarSettings]="tools" [fontSize]='size'
+                    [fontFamily]='family'>
+                </ejs-richtexteditor>
+            </div>
+
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="100" appearance="outline">
+                    <mat-label>Post Script </mat-label>
+                    <input matInput placeholder="Post Script" formControlName="psNote">
+                </mat-form-field>
+            </div>
+
+            <div fxFlex class="contact-save" fxLayout="row" fxLayoutAlign="end stretch">
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+
+                </div>
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    <button type="button" mat-raised-button>CANCEL</button>
+                    <button color="primary" mat-raised-button [disabled]="!form.valid">SAVE</button>
+                </div>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+
+            </div>
+        </div>
+
+    </form>
+
+</div>

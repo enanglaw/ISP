@@ -1,0 +1,262 @@
+<div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px">
+  <h2>Person Profile</h2>
+  <form (submit)="saveChanges()" [formGroup]="form">
+    <!-- <div>
+      <input type="text" matInput hidden />
+      <label for="inputDataDocument" class="mediaLabel">Input Document: <a
+          [href]="model?.inputDocumentUrl">{{model?.inputDocumentPath}}
+        </a></label>
+    </div> -->
+    <div>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Primary Person name</mat-label>
+        <input matInput formControlName="personName" placeholder="Please type Primary Person name" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Primary Person father name</mat-label>
+        <input matInput formControlName="parentName" placeholder="Please type Primary Person father name"
+          autocomplete="off" />
+      </mat-form-field>
+    </div>
+    <div formArrayName="personAliasName">
+      <div *ngFor="let document of alias.controls; let i=index;">
+        <!-- The repeated aliasname template -->
+        <mat-form-field appearance="outline">
+          <mat-label>Alias Name {{i+1}}</mat-label>
+          <input matInput id="alias-{{ i }}" type="text" [formControlName]="i" color="primary">
+          <mat-error *ngIf="alias.controls[i].get('personAliasName')?.hasError('required')">Please type Alias Name
+          </mat-error>
+        </mat-form-field>
+        <button type="button" mat-icon-button (click)="removeAliasName(i)" color="warn" title="Remove AliasName">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </div>
+      <button mat-raised-button (click)="addAliasName()" type="button" color="primary">Add Alias Name</button>
+    </div>
+    <div>
+      <mat-form-field class="full-width w100" appearance="outline">
+        <mat-label>Primary Person Primary Address</mat-label>
+        <textarea matInput formControlName="primaryAddress" placeholder="Please type Primary Person primary address"
+          style="height: 75px;" autocomplete="off"></textarea>
+      </mat-form-field>
+    </div>
+    <table formArrayName="personAddress" *ngFor="let addr of addresses.controls; let i=index;">
+      <tr [formGroupName]="i">
+        <td>
+          <!-- The repeated addresses template -->
+          <mat-form-field appearance="outline">
+            <mat-label>Address Label</mat-label>
+            <input matInput id="addressLabel-{{ i }}" type="text" formControlName="addressLabel" color="primary">
+            <mat-error *ngIf="addresses.controls[i]?.get('addressLabel')?.hasError('required')">Address Label is
+              required
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Address Text</mat-label>
+            <textarea matInput id="addressText-{{ i }}" type="text" formControlName="addressText" color="primary"
+              style="height: 50px;" autocomplete="off"></textarea>
+            <mat-error *ngIf="addresses.controls[i]?.get('addressText')?.hasError('required')">Address Text is required
+            </mat-error>
+          </mat-form-field>
+          <button type="button" mat-icon-button (click)="removeAddress(i)" color="warn"
+            title="Remove Alternate Address">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+    <button mat-raised-button (click)="addAddress()" type="button" color="primary">Add Alternate Address</button>
+    <table formArrayName="personCaseHistory" *ngFor="let case of caseHistory.controls; let i=index;">
+      <tr [formGroupName]="i">
+        <td>
+          <!-- The repeated case history template -->
+          <mat-form-field appearance="outline">
+            <mat-label>Previous Case</mat-label>
+            <mat-select id="caseId-{{i}}" formControlName="caseId" placeholder="Select a case">
+              <mat-option>Please Select a case</mat-option>
+              <mat-option *ngFor="let case of casesList" [value]="case.caseId">
+                {{case.caseName}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="caseHistory.controls[i]?.get('caseId')?.invalid && (caseHistory.controls[i]?.get('caseId')?.touched || caseHistory.controls[i]?.get('caseId')?.dirty) && caseHistory.controls[i]?.get('caseId')?.hasError('required')">
+              Please select a Case
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Case Status</mat-label>
+            <mat-select id="caseStatusId-{{i}}" formControlName="caseStatusId" placeholder="Select a case status">
+              <mat-option>Please Select a case status</mat-option>
+              <mat-option *ngFor="let status of caseStatusList" [value]="status.caseStatusId">
+                {{status.caseStatus}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="caseHistory.controls[i]?.get('caseStatusId')?.invalid && (caseHistory.controls[i]?.get('caseStatusId')?.touched || caseHistory.controls[i]?.get('caseStatusId')?.dirty) && caseHistory.controls[i]?.get('caseStatusId')?.hasError('required')">
+              Please select a Case status
+            </mat-error>
+          </mat-form-field>
+          <button type="button" mat-icon-button (click)="removeCaseHistory(i)" color="warn" title="Remove Case History">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+    <button mat-raised-button (click)="addCaseHistory()" type="button" color="primary">Add New Case History</button>
+    <table class="normal">
+      <tr>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Primary Person Type</mat-label>
+            <mat-select formControlName="personPersonType" multiple placeholder="Select Primary Person Type">
+              <mat-option *ngFor="let personType of personPersonTypeList" [value]="personType.personTypeId">
+                <!-- <mat-option>Please Select Primary Person Type</mat-option> -->
+                {{personType.personTypeName}}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="form.controls.personPersonType.invalid && (form.controls.personPersonType.touched || form.controls.personPersonType.dirty) && form.controls.personPersonType.hasError('required') ">
+              Primary Person Type is required.</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>History SheetNo.</mat-label>
+            <input matInput id="historySheetNo" type="text" formControlName="historySheetNo" color="primary">
+            <mat-error *ngIf="form.controls.historySheetNo.hasError('required')">History SheetNo is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Current Status</mat-label>
+            <mat-select formControlName="statusId" placeholder="Select Primary Person Status">
+              <mat-option>Please Select Primary Person Status</mat-option>
+              <mat-option *ngFor="let personStatus of personStatusList" [value]="personStatus.statusId">
+                {{personStatus.statusName}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="form.controls.statusId.invalid && (form.controls.statusId.touched || form.controls.statusId.dirty) && form.controls.statusId.hasError('required') ">
+              Current Status is required.</mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <label class="quill-caption">Current Activity*</label>
+          <ejs-richtexteditor id="currentActivity" #currentActivity formControlName="currentActivity" [toolbarSettings]="sfRTETools" [fontSize]="sfRTEFontSize" [fontFamily]="sfRTEFontFamily" height="300px">
+          </ejs-richtexteditor>
+          <div>&nbsp;</div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label class="quill-caption">Modus Operandi*</label>
+          <ejs-richtexteditor id="modusOperandi" #modusOperandi formControlName="modusOperandi" [toolbarSettings]="sfRTETools" [fontSize]="sfRTEFontSize" [fontFamily]="sfRTEFontFamily" height="300px">
+          </ejs-richtexteditor>
+          <div>&nbsp;</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field appearance="outline">
+            <mat-label>Gang Name</mat-label>
+            <mat-select formControlName="gangId" placeholder="Select a Gang">
+              <mat-option>Please Select a Gang</mat-option>
+              <mat-option *ngFor="let gang of gangList" [value]="gang.gangId">
+                {{gang.gangName}}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="form.controls.gangId.invalid && (form.controls.gangId.touched || form.controls.gangId.dirty) && form.controls.gangId.hasError('required') ">
+              Gang is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Gang Member Type</mat-label>
+            <mat-select formControlName="gangMemberType" placeholder="Select a member type">
+              <mat-option>Please Select a Member type</mat-option>
+              <mat-option value="1">Leader</mat-option>
+              <mat-option value="2">Prominant</mat-option>
+              <mat-option value="3">Others</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="form.controls.gangMemberType.invalid && (form.controls.gangMemberType.touched || form.controls.gangMemberType.dirty) && form.controls.gangMemberType.hasError('required') ">
+              Gang member type is required.</mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <table formArrayName="personRivalGang" *ngFor="let gang of rivalGangs.controls; let i=index;">
+            <tr [formGroupName]="i">
+              <td>
+                <!-- The repeated rival gang template -->
+                <mat-form-field appearance="outline">
+                  <mat-label>Rival Gang name</mat-label>
+                  <mat-select id="gangId-{{i}}" formControlName="rivalGangId" placeholder="Select a Rival Gang">
+                    <mat-option>Please Select a Rival Gang</mat-option>
+                    <mat-option *ngFor="let rGang of gangList" [value]="rGang.gangId">
+                      {{rGang.gangName}}</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="rivalGangs.controls[i]?.get('rivalGangId')?.invalid && (rivalGangs.controls[i]?.get('rivalGangId')?.touched || rivalGangs.controls[i]?.get('rivalGangId')?.dirty) && rivalGangs.controls[i]?.get('rivalGangId')?.hasError('required') ">
+                    Rival Gang is required.</mat-error>
+                </mat-form-field>
+                <button type="button" mat-icon-button (click)="removeRivalGang(i)" color="warn"
+                  title="Remove Rival Gang">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+          <button mat-raised-button (click)="addRivalGang()" type="button" color="primary">Add Rival Gang</button>
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td>
+          <app-input-img urlCurrentImage="" (onImageSelected)="onImageSelected($event)"></app-input-img>
+        </td>
+        <td>
+          <table formArrayName="personMedia" *ngFor="let mdeia of inputMedias.controls; let i=index;">
+            <tr [formGroupName]="i">
+              <td>
+                <div fxLayout="row">
+                  <!-- The repeated InputMedia template -->
+                  <mat-form-field appearance="outline">
+                    <mat-label>Media Label</mat-label>
+                    <input matInput id="mediaLabel-{{i}}" formControlName="mediaLabel" placeholder="Meaid label" />
+                    <mat-error
+                      *ngIf="inputMedias.controls[i]?.get('mediaLabel')?.invalid && (inputMedias.controls[i]?.get('mediaLabel')?.touched || inputMedias.controls[i]?.get('mediaLabel')?.dirty) && inputMedias.controls[i]?.get('mediaLabel')?.hasError('required') ">
+                      Media label is required.</mat-error>
+                  </mat-form-field>
+                  <div style="margin-right: 1rem;">
+                    <label for="media-{{i}}" class="mediaLabel2"
+                      style="min-width: 300px!important;">{{selectedFiles[i]}}</label>
+                    <input type="file" [hidden]="true" id="media-{{i}}" placeholder="Meaid"
+                      (change)="updateMediaFileLabel(i, $event)" />
+                    <input matInput [hidden]="true" id="mediaInput-{{i}}" />
+                    <mat-error
+                      *ngIf="inputMedias.controls[i]?.get('media')?.invalid && (inputMedias.controls[i]?.get('media')?.touched || inputMedias.controls[i]?.get('media')?.dirty) && inputMedias.controls[i]?.get('media')?.hasError('required') ">
+                      Media is required.</mat-error>
+                  </div>
+                  <button type="button" mat-icon-button (click)="removeInputMedia(i)" color="warn" title="Remove Media">
+                    <mat-icon>remove_circle</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <button mat-raised-button (click)="addInputMedia()" type="button" color="primary">Add Media</button>
+        </td>
+      </tr>
+    </table>
+    <div>&nbsp;</div>
+    <!-- {{medias.valueChanges | async | json}} -->
+    <div>
+      <button mat-flat-button color="primary" [disabled]="form.invalid">Save Changes</button>
+      <a mat-stroked-button routerLink="/auth/person">Cancel</a>
+    </div>
+    <div>&nbsp;</div>
+    <!-- <div>{{form.value|json}}</div>
+    <div>{{formErrors|json}}</div>
+    <button mat-raised-button (click)="myFormErrors()" type="button" color="primary">Get Errors</button> -->
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+  </form>
+</div>

@@ -1,0 +1,82 @@
+<div *ngIf="isFormLoded" fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill
+    class="components-container-gt-xs ">
+
+    <form (submit)="saveChanges()" (keydown.enter)="$event.preventDefault()"  [formGroup]="form" fxLayout="row"
+        fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayoutGap="10px" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+                <h3 class="mat-headline">{{heading}}</h3>
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button type="button" mat-icon-button (click)="onCancel()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div> 
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Allegation Title</mat-label>
+                    <input matInput placeholder="Allegation Title"  formControlName="title" >                       
+                </mat-form-field> 
+                <mat-form-field fxFlex="50" appearance="outline">
+                    <mat-label>Complainant Name</mat-label>
+                    <input matInput placeholder="Complainant"  formControlName="complainant" >                       
+                </mat-form-field>
+            </div>                   
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Accused Name </mat-label>
+                        <input matInput placeholder="Accused Name"  formControlName="accusedName" >                       
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Accused Rank</mat-label>
+                        <input matInput placeholder="Accused Rank"  formControlName="accusedRank" >                       
+                    </mat-form-field>
+                </div>  
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="30" appearance="outline">
+                        <mat-label>Accused Posting</mat-label>
+                        <input matInput placeholder="Accused Posting"  formControlName="accusedPosting" >                       
+                    </mat-form-field>
+                    <mat-form-field  fxFlex="25" appearance="outline" >
+                        <mat-label>Date Of Complaint</mat-label>
+                        <input formControlName="dateOfComplaint" matInput [matDatepicker]="picker"
+                            (click)="picker.open()" placeholder="Date Of Complaint">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field> 
+                    <mat-toolbar fxFlex="45"> 
+                        <input readonly matInput placeholder="Choose file to upload"  formControlName="attachmentUrl" >  
+                             
+                           <input   type="file" #fileDocument placeholder="Choose file" (change)="onDocumentFileSelected(fileDocument.files)" style="display:none;">
+                            <button type="button" color="primary" mat-raised-button
+                                (click)="fileDocument.click()">Upload</button>                 
+                    </mat-toolbar>                     
+        
+
+                </div>           
+               
+          <label class="quill-caption">Complaint Detail</label>
+          <ejs-richtexteditor id="complaintDetails" #complaintDetails formControlName="complaintDetails" 
+		  [toolbarSettings]="sfRTETools" 
+		  [fontSize]="sfRTEFontSize" 
+		  [fontFamily]="sfRTEFontFamily" height="200px">
+          </ejs-richtexteditor>
+            <div fxFlex class="contact-save" fxLayout="row" fxLayoutAlign="end stretch">
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    <button color="primary" mat-raised-button [disabled]="!form.valid">SAVE</button>                  
+                    <button type="button" (click)="onCancel()" mat-raised-button>CANCEL</button>
+                </div>
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                </div>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+            </div>
+
+        </div>
+    </form>
+</div>  
+ 
+       

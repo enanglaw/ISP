@@ -1,0 +1,80 @@
+<div *ngIf="isFormLoded" fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill
+    class="components-container-gt-xs ">
+
+    <form (submit)="saveChanges()" (keydown.enter)="$event.preventDefault()" [formGroup]="form" fxLayout="row"
+        fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayoutGap="10px" fxLayout="column" class="mat-elevation-z2 contact-add">
+           
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4 class="mat-headline" fxFlex="80">{{heading}}</h4>
+               
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button type="button" mat-icon-button (click)="onCancel()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>        
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Organization </mat-label>
+                        <mat-select formControlName="organizationId" (selectionChange)="onOrgSelected($event)">
+                            <mat-option aria-readonly="true">Please Choose the Organization</mat-option>
+                            <mat-option *ngFor="let item of organizationListmodel" [value]="item.organizationId">
+                                {{item.fullName}}</mat-option>
+                        </mat-select>                       
+                    </mat-form-field>
+                   
+                        <mat-form-field  fxFlex="50" appearance="outline">
+                            <mat-label>Sub Organization </mat-label>
+                            <mat-select formControlName="subOrganizationId">
+                                <mat-option aria-readonly="true">Select Sub Organization</mat-option>
+                                <mat-option *ngFor="let item of subOrganizationListmodel" [value]="item.id">
+                                    {{item.name}}</mat-option>
+                            </mat-select>                       
+                        </mat-form-field>
+                   
+                   
+                </div>   
+                
+               
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Event Title</mat-label>
+                        <input matInput formControlName="title">                                   
+                    </mat-form-field> 
+                    <mat-form-field  fxFlex="50" appearance="outline" >
+                        <mat-label>Event Date</mat-label>
+                        <input formControlName="eventDate" matInput [matDatepicker]="picker"
+                            (click)="picker.open()" placeholder="Event Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field> 
+                </div>   
+          <label class="quill-caption">Event Description</label>
+          <ejs-richtexteditor id="eventDescription" #eventDescription formControlName="description" 
+		  [toolbarSettings]="sfRTETools" 
+		  [fontSize]="sfRTEFontSize" 
+		  [fontFamily]="sfRTEFontFamily" height="200px">
+          </ejs-richtexteditor>
+          <div>&nbsp;</div>
+      
+            <mat-divider></mat-divider>
+          
+            <mat-divider></mat-divider>
+            <div fxFlex class="contact-save" fxLayout="row" fxLayoutAlign="end stretch">
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    <button color="primary" mat-raised-button [disabled]="!form.valid">SAVE</button>
+                    <button type="button" (click)="onCancel()" mat-raised-button>CANCEL</button>
+                </div>
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    
+                </div>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+            </div>
+       
+        </div>
+    </form>
+</div>

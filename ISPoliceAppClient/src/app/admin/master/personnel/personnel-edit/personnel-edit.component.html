@@ -1,0 +1,8 @@
+<app-personnel-form *ngIf="model" [heading]="'Edit Personnel'" 
+[model]="personnelModel"
+(onSaveChanges)="onSaveChanges($event)" >
+</app-personnel-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>

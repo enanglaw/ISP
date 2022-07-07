@@ -1,0 +1,9 @@
+<app-profile-form *ngIf="model" [heading]="'Edit Profile'" 
+[model]="model"
+[associateListModel]="associateList" 
+(onSaveChanges)="onSaveChanges($event)" >
+</app-profile-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>

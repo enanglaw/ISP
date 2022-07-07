@@ -1,0 +1,8 @@
+<app-notes-form *ngIf="model" [heading]="'Edit Notes'" 
+[model]="notesModel"
+(onSaveChanges)="onSaveChanges($event)" >
+</app-notes-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>

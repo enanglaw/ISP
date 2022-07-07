@@ -1,0 +1,279 @@
+<div *ngIf="isFormLoded" fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill
+    class="components-container-gt-xs ">
+
+    <form (submit)="saveChanges()" (keydown.enter)="$event.preventDefault()"  [formGroup]="form" fxLayout="row"
+        fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayoutGap="10px" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+                <h3 class="mat-headline">{{heading}}</h3>
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button type="button" mat-icon-button (click)="onCancel()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div> 
+            <mat-divider></mat-divider>        
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="100" appearance="outline">
+                        <mat-label>Organization Full Name </mat-label>
+                        <input matInput placeholder="Full Name" formControlName="fullName" >                       
+                    </mat-form-field>
+                </div>  
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Organization Short Name </mat-label>
+                        <input matInput placeholder="Short Name"  formControlName="shortName" >                       
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Organization Ideology </mat-label>
+                        <input matInput placeholder="Ideology" formControlName="ideology" >                       
+                    </mat-form-field>
+                </div> 
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Flag </mat-label>
+                        <input matInput placeholder="Organization Flag" formControlName="flagUrl" > 
+                        <mat-toolbar>      
+                         <input   type="file" #fileFlag placeholder="Choose file" (change)="onFlagFileSelected(fileFlag.files)" style="display:none;">
+                            <button type="button" color="primary" mat-raised-button
+                                (click)="fileFlag.click()">Upload Flag</button> 
+                        </mat-toolbar>                       
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Symbol </mat-label>
+                        <input matInput placeholder="Organization Symbol"  formControlName="symbolUrl" >  
+                        <mat-toolbar>      
+                           <input   type="file" #fileSymbol placeholder="Choose file" (change)="onSymbolFileSelected(fileSymbol.files)" style="display:none;">
+                            <button type="button" color="primary" mat-raised-button
+                                (click)="fileSymbol.click()">Upload Symbol</button>                 
+                         </mat-toolbar>                     
+                    </mat-form-field>
+                </div> 
+                <mat-divider></mat-divider>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                    <h4 class="mat-headline" fxFlex="80">Sub Organization List</h4>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <table mat-table formArrayName="subOrganizationCategory"               
+                     [dataSource]="subOrganizationDataSource"
+                        class="mat-elevation-z8 table-index">
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">No</th>
+                            <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Name">
+                            <th mat-header-cell *matHeaderCellDef>Name</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <mat-form-field appearance="outline" [style.width.%]="98">
+                                    <mat-label>Name</mat-label>
+                                    <input matInput formControlName="name">
+                                </mat-form-field>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+    
+                        </ng-container>
+                        <ng-container matColumnDef="Description">
+                            <th mat-header-cell *matHeaderCellDef>Description</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <mat-form-field appearance="outline" [style.width.%]="98">
+                                    <mat-label>Description</mat-label>
+                                    <input matInput formControlName="description">
+                                </mat-form-field>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">Actions</th>
+                            <td mat-cell *matCellDef="let element; let index = index">
+    
+                                <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                      title: 'Confirmation',
+                                      text: 'Are you sure that you want to delete the record?',
+                                      showCancelButton: true
+                                  }" (confirm)="onSubOrganizationDelete(element,index)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+    
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef>
+                                <button type="button" (click)="onAddSubOrganizations()" mat-icon-button title="Delete"
+                                    color="warn">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </td>
+    
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="subOrganizationDataSourceColumns"></tr>
+                        <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                            *matRowDef="let row; columns: subOrganizationDataSourceColumns"></tr>
+                        <tr mat-footer-row *matFooterRowDef="subOrganizationDataSourceColumns"></tr>
+                    </table>
+                </div>    
+                 
+                <mat-divider></mat-divider>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                    <h4 class="mat-headline" fxFlex="80">Organization Events</h4>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <table mat-table formArrayName="organizationEvent"               
+                     [dataSource]="organizationEventDataSource"
+                        class="mat-elevation-z8 table-index">
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">No</th>
+                            <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Title">
+                            <th mat-header-cell *matHeaderCellDef>Title</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <mat-form-field appearance="outline" [style.width.%]="98">
+                                    <mat-label>Title</mat-label>
+                                    <input matInput formControlName="title">
+                                   <!-- <mat-error
+                                    *ngIf="f.name.invalid && (f.name.touched || f.name.dirty) && f.name.hasError('required')">
+                                    Name is required.</mat-error>-->
+                                </mat-form-field>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+    
+                        </ng-container>
+                        <ng-container matColumnDef="Description">
+                            <th mat-header-cell *matHeaderCellDef>Description</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <mat-form-field appearance="outline" [style.width.%]="98">
+                                    <mat-label>Description</mat-label>
+                                    <input matInput formControlName="description">
+                                </mat-form-field>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Event Date">
+                            <th mat-header-cell *matHeaderCellDef>Event Date</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <mat-form-field fxFlex="98" appearance="outline" [style.width.%]="98">
+                                    <mat-label>Event Date</mat-label>
+                                    <input formControlName="eventDate" matInput [matDatepicker]="picker"
+                                        (click)="picker.open()" placeholder="Event Date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>  
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">Actions</th>
+                            <td mat-cell *matCellDef="let element; let index = index">
+    
+                                <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                      title: 'Confirmation',
+                                      text: 'Are you sure that you want to delete the record?',
+                                      showCancelButton: true
+                                  }" (confirm)="onOrganizationEventDelete(element,index)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+    
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef>
+                                <button type="button" (click)="onAddOrganizationEvent()" mat-icon-button title="Delete"
+                                    color="warn">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </td>
+    
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="organizationEventDataSourceColumns"></tr>
+                        <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                            *matRowDef="let row; columns: organizationEventDataSourceColumns"></tr>
+                        <tr mat-footer-row *matFooterRowDef="organizationEventDataSourceColumns"></tr>
+                    </table>
+                </div>    
+        <!--        <mat-divider></mat-divider>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between center">
+                    <h4 class="mat-headline" fxFlex="80">Organization Media</h4>
+                </div>
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <table mat-table formArrayName="organizationMedia"               
+                     [dataSource]="organizationMediaDataSource"
+                        class="mat-elevation-z8 table-index">
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">No</th>
+                            <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Title">
+                            <th mat-header-cell *matHeaderCellDef>Title</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <mat-form-field appearance="outline" [style.width.%]="98">
+                                    <mat-label>Title</mat-label>
+                                    <input matInput formControlName="title">
+                                    <mat-error
+                                    *ngIf="f.name.invalid && (f.name.touched || f.name.dirty) && f.name.hasError('required')">
+                                    Name is required.</mat-error>
+                                </mat-form-field>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+    
+                        </ng-container>
+                        <ng-container matColumnDef="Document">
+                            <th mat-header-cell *matHeaderCellDef>Document</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <input matInput formControlName="mediaUrl">
+                       <mat-toolbar>      
+                           <input   type="file" #fileMedia placeholder="Choose file" 
+                           (change)="onMediaFileSelected(fileMedia.files)" style="display:none;">
+                            <button type="button" color="primary" mat-raised-button
+                                (click)="fileMedia.click()">Upload Media</button>                 
+                         </mat-toolbar> 
+                              
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">Actions</th>
+                            <td mat-cell *matCellDef="let element; let index = index">
+    
+                                <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                      title: 'Confirmation',
+                                      text: 'Are you sure that you want to delete the record?',
+                                      showCancelButton: true
+                                  }" (confirm)="onOrganizationMediaDelete(element,index)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+    
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef>
+                                <button type="button" (click)="onAddOrganizationMedia()" mat-icon-button title="Delete"
+                                    color="warn">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </td>
+    
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="organizationMediaDataSourceColumns"></tr>
+                        <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                            *matRowDef="let row; columns: organizationMediaDataSourceColumns"></tr>
+                        <tr mat-footer-row *matFooterRowDef="organizationMediaDataSourceColumns"></tr>
+                    </table>
+                </div>   -->     
+            <mat-divider></mat-divider>
+            <div fxFlex class="contact-save" fxLayout="row" fxLayoutAlign="end stretch">
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    <button color="primary" mat-raised-button [disabled]="!form.valid">SAVE</button>                  
+                    <button type="button" (click)="onCancel()" mat-raised-button>CANCEL</button>
+                </div>
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                </div>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+            </div>
+
+        </div>
+    </form>
+</div>

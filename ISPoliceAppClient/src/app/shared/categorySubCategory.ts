@@ -1,0 +1,21 @@
+export const catSubCats = [
+  {
+    category: 'ROWDY',
+    subCategory: ['ENIMITY', 'EXTORTION'],
+  },
+  {
+    category: 'ILLEGAL',
+    subCategory: [
+      'PROHIBITION',
+      'GANJA',
+      'GUTKHA',
+      'GAMBLING',
+      'PROSTITUTION',
+      'PDS',
+    ],
+  },
+  {
+    category: 'L&O ISSUES',
+    subCategory: ['TRANSGENDER', 'PDS'],
+  },
+];

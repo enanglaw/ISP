@@ -1,0 +1,95 @@
+<div *ngIf="isFormLoded" fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill
+    class="components-container-gt-xs ">
+
+    <form (submit)="saveChanges()" (keydown.enter)="$event.preventDefault()" [formGroup]="form" fxLayout="row"
+        fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayoutGap="10px" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+                <h3 class="mat-headline">{{heading}}</h3>
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button type="button" mat-icon-button (click)="onCancel()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div>    
+                
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <table mat-table formArrayName="plans"               
+                     [dataSource]="planDataSource"
+                        class="mat-elevation-z8 table-index">
+                        <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">No</th>
+                            <td mat-cell *matCellDef="let element ; let i = index">No {{ i+1}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Title">
+                            <th mat-header-cell *matHeaderCellDef>Title</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                                <mat-form-field appearance="outline" [style.width.%]="98">
+                                    <mat-label>Title</mat-label>
+                                    <input matInput formControlName="title">
+                                  <!--  <mat-error
+                                    *ngIf="f.title.invalid && (f.title.touched || f.title.dirty) && f.title.hasError('required')">
+                                    Document Title is required.</mat-error>-->
+                                </mat-form-field>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+    
+                        </ng-container>
+                        <ng-container matColumnDef="Document">
+                            <th mat-header-cell *matHeaderCellDef>Document</th>
+                            <td mat-cell *matCellDef="let element;let index = index" [formGroupName]="index">
+                               
+                                <input   type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)"
+                                style="display:none;">
+                               <button type="button" color="primary" mat-raised-button
+                                (click)="file.click()">Upload</button>  
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef [style.width.%]="10">Actions</th>
+                            <td mat-cell *matCellDef="let element; let index = index">
+    
+                                <button type="button" mat-icon-button title="Delete" color="warn" [swal]="{
+                                      title: 'Confirmation',
+                                      text: 'Are you sure that you want to delete the record?',
+                                      showCancelButton: true
+                                  }" (confirm)="onPlanDelete(element,index)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+    
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef>
+                                <button type="button" (click)="onAddPlan()" mat-icon-button title="Delete"
+                                    color="warn">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </td>
+    
+                        </ng-container>
+    
+                        <tr mat-header-row *matHeaderRowDef="planDataSourceColumns"></tr>
+                        <tr [hidden]="row.controls['isActive'].value==0" mat-row
+                            *matRowDef="let row; columns: planDataSourceColumns"></tr>
+                        <tr mat-footer-row *matFooterRowDef="planDataSourceColumns"></tr>
+                    </table>
+                </div>       
+            <mat-divider></mat-divider>
+            <div fxFlex class="contact-save" fxLayout="row" fxLayoutAlign="end stretch">
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    <button color="primary" mat-raised-button [disabled]="!form.valid">SAVE</button>                  
+                    <button type="button" (click)="onCancel()" mat-raised-button>CANCEL</button>
+                </div>
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                </div>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+            </div>
+
+        </div>
+    </form>
+</div>

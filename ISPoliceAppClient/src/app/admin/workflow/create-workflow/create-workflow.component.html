@@ -1,0 +1,9 @@
+<div fxLayout="column" class="components-container-gt-xs" fxLayoutGap="20px">
+  <h2>
+    Create Wotkflow
+  </h2>
+
+  <app-display-errors [errors]="errors"></app-display-errors>
+  <div>{{errors}}</div>
+  <app-form-workflow (onSaveChanges)="saveChanges($event)"></app-form-workflow>
+</div>

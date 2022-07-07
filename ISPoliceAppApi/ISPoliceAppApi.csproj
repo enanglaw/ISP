@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20220212184259_addDRSTable.cs" />
+    <Compile Remove="Migrations\20220212184259_addDRSTable.Designer.cs" />
+    <Compile Remove="Migrations\20220214070006_updatecolumn.cs" />
+    <Compile Remove="Migrations\20220214070006_updatecolumn.Designer.cs" />
+    <Compile Remove="Migrations\20220704234239_relaxTitleValidation.cs" />
+    <Compile Remove="Migrations\20220704234239_relaxTitleValidation.Designer.cs" />
+    <Compile Remove="Migrations\20220705075223_ChangeNoteControllerAndModeltoAllegationControllerAndModel.cs" />
+    <Compile Remove="Migrations\20220705075223_ChangeNoteControllerAndModeltoAllegationControllerAndModel.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+  <!-- <PackageReference Include="Application.Utility" Version="1.0.0" />-->
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="FreeSpire.Doc" Version="10.2.0" />
+    <PackageReference Include="FreeSpire.PDF" Version="8.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.24" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="3.1.7" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Media\Leaders\" />
+    <Folder Include="Resources\Media\Organization\" />
+    <Folder Include="Resources\Media\Personnel\" />
+    <Folder Include="Resources\Media\Plans\" />
+    <Folder Include="Resources\Template\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>E:\Sumesh\Sample\isp\ISPoliceAppApi\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <History>True|2022-03-06T11:03:26.0041176Z;True|2022-03-06T16:32:14.8326250+05:30;True|2022-03-06T16:13:08.3843565+05:30;False|2022-03-06T16:12:42.1114724+05:30;True|2022-03-06T15:18:04.9021670+05:30;True|2022-03-06T15:12:45.8579415+05:30;True|2022-03-06T15:12:01.4734261+05:30;True|2022-03-06T14:58:30.1471314+05:30;True|2022-03-06T14:49:25.7418932+05:30;True|2022-03-06T14:44:23.6729345+05:30;True|2022-03-06T14:44:07.0726768+05:30;True|2022-03-06T14:43:36.7331818+05:30;True|2022-03-06T14:43:09.8718971+05:30;True|2022-03-06T14:42:49.5019096+05:30;True|2022-03-06T14:29:25.6625220+05:30;True|2022-03-06T13:26:41.3446635+05:30;True|2022-02-06T17:31:22.8051206+05:30;True|2022-02-06T17:01:04.1200615+05:30;True|2022-02-02T20:00:17.7482184+05:30;</History>
+  </PropertyGroup>
+</Project>

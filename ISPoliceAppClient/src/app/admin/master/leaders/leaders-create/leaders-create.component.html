@@ -1,0 +1,83 @@
+<!--<app-leaders-form [heading]="'New Leaders'" 
+(onSaveChanges)="onSaveChanges($event)"  >
+</app-leaders-form>-->
+
+
+<div *ngIf="isFormLoded" fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill
+    class="components-container-gt-xs ">
+
+    <form (submit)="saveChanges()" (keydown.enter)="$event.preventDefault()"  [formGroup]="form" fxLayout="row"
+        fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="100" fxLayoutGap="10px" fxLayout="column" class="mat-elevation-z2 contact-add">
+
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+                <h3 class="mat-headline">{{heading}}</h3>
+                <div fxLayout="row" fxLayoutAlign="end center" fxFlex="10">
+                    <button type="button" mat-icon-button (click)="onCancel()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </div> 
+            <mat-divider></mat-divider>                    
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Organization </mat-label>
+                        <mat-select formControlName="organizationId" (selectionChange)="onOrgSelected($event)">
+                            <mat-option aria-readonly="true">Please Choose the Organization</mat-option>
+                            <mat-option *ngFor="let item of organizationListmodel" [value]="item.organizationId">
+                                {{item.fullName}}</mat-option>
+                        </mat-select>                       
+                    </mat-form-field>
+                   
+                        <mat-form-field  fxFlex="50" appearance="outline">
+                            <mat-label>Sub Organization </mat-label>
+                            <mat-select formControlName="subOrganizationId">
+                                <mat-option aria-readonly="true">Select Sub Organization</mat-option>
+                                <mat-option *ngFor="let item of subOrganizationListmodel" [value]="item.id">
+                                    {{item.name}}</mat-option>
+                            </mat-select>                       
+                        </mat-form-field>
+                    
+                   
+                </div> 
+            
+            <mat-divider></mat-divider>        
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Name </mat-label>
+                        <input matInput placeholder=" Name"  formControlName="name" >                       
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50" appearance="outline">
+                        <mat-label>Designation </mat-label>
+                        <input matInput placeholder="Designation"  formControlName="designation" >                       
+                    </mat-form-field>
+                </div>  
+                <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+                    <mat-form-field fxFlex="35" appearance="outline">
+                        <mat-label>Mobile Number </mat-label>
+                        <input matInput placeholder="Mobile Number"  formControlName="mobileNumber" >                       
+                    </mat-form-field>
+                    <mat-form-field fxFlex="65" appearance="outline">
+                        <mat-label>Address </mat-label>
+                        <input matInput placeholder="Address"  formControlName="address" >                       
+                    </mat-form-field>
+                </div>
+             <mat-divider></mat-divider>
+            <div fxFlex class="contact-save" fxLayout="row" fxLayoutAlign="end stretch">
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                    <button color="primary" mat-raised-button [disabled]="!form.valid">SAVE</button>                  
+                    <button type="button" (click)="onCancel()" mat-raised-button>CANCEL</button>
+                </div>
+                <div fxFlex="50" fxLayout="row" fxLayoutAlign="">
+                </div>
+            </div>
+            <div fxFlex fxLayoutGap="10px" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="start start">
+            </div>
+
+        </div>
+    </form>
+</div>  
+ 
+       

@@ -1,0 +1,8 @@
+<app-leaders-form *ngIf="model" [heading]="'Edit Leaders'" 
+[model]="leadersModel"
+(onSaveChanges)="onSaveChanges($event)" >
+</app-leaders-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>

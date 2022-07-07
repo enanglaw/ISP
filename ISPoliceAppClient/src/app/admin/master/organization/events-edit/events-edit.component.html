@@ -1,0 +1,9 @@
+
+<app-events-form *ngIf="model" [heading]="'Edit Event Assigned'" 
+[model]="eventsModel"
+(onSaveChanges)="onSaveChanges($event)" >
+</app-events-form>
+
+<div class="center" >
+    <mat-spinner *ngIf="!model" ></mat-spinner>
+</div>
